@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+
+  /* Chili color palette */
+  --color-chili-50: #fef2f2;
+  --color-chili-100: #fee2e2;
+  --color-chili-200: #fecaca;
+  --color-chili-300: #fca5a5;
+  --color-chili-400: #f87171;
+  --color-chili-500: #ef4444;
+  --color-chili-600: #dc2626;
+  --color-chili-700: #b91c1c;
+  --color-chili-800: #991b1b;
+  --color-chili-900: #7f1d1d;
+
+  /* Leaf color palette */
+  --color-leaf-50: #f0fdf4;
+  --color-leaf-100: #dcfce7;
+  --color-leaf-200: #bbf7d0;
+  --color-leaf-300: #86efac;
+  --color-leaf-400: #4ade80;
+  --color-leaf-500: #22c55e;
+  --color-leaf-600: #16a34a;
+  --color-leaf-700: #15803d;
+  --color-leaf-800: #166534;
+  --color-leaf-900: #14532d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
