@@ -82,7 +82,7 @@ export default function ScanPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">AI Disease Scanner</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">AI Disease Scanner</h1>
         <p className="text-gray-400 mt-2">
           Upload a photo of your chili plant to detect diseases instantly
         </p>
