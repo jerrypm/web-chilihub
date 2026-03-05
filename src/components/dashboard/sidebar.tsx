@@ -11,6 +11,7 @@ import {
   BarChart3,
   CalendarDays,
   Calculator,
+  Sprout,
   LogOut,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n/context";
@@ -22,6 +23,7 @@ const navItems = [
   { href: "/prices", icon: BarChart3, labelKey: "nav.priceDashboard", shortLabelKey: "nav.prices" },
   { href: "/calendar", icon: CalendarDays, labelKey: "nav.growingCalendar", shortLabelKey: "nav.calendar" },
   { href: "/calculator", icon: Calculator, labelKey: "nav.profitCalculator", shortLabelKey: "nav.calc" },
+  { href: "/guide", icon: Sprout, labelKey: "nav.urbanGuide", shortLabelKey: "nav.guide" },
 ];
 
 export function Sidebar() {
