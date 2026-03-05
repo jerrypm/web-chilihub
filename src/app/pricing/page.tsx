@@ -1,77 +1,86 @@
+"use client";
+
 import Link from "next/link";
 import { Check, Leaf } from "lucide-react";
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Get started with basic disease detection",
-    features: [
-      "3 disease scans per month",
-      "Basic price view",
-      "Growing tips",
-    ],
-    cta: "Start Free",
-    href: "/sign-up",
-    popular: false,
-  },
-  {
-    name: "Pro",
-    price: "$6.99",
-    period: "per month",
-    description: "Unlimited scanning and full dashboard access",
-    features: [
-      "Unlimited disease scans",
-      "Full price dashboard with alerts",
-      "Complete growing calendar",
-      "Disease history & trends",
-      "Priority support",
-    ],
-    cta: "Go Pro",
-    href: "/sign-up?plan=pro",
-    popular: true,
-  },
-  {
-    name: "Business",
-    price: "$14.99",
-    period: "per month",
-    description: "For commercial growers and farm managers",
-    features: [
-      "Everything in Pro",
-      "Profitability calculator",
-      "Multi-farm management",
-      "Export reports (PDF/CSV)",
-      "Team access (up to 5)",
-      "API access",
-    ],
-    cta: "Start Business",
-    href: "/sign-up?plan=business",
-    popular: false,
-  },
-];
+import { useI18n } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export default function PricingPage() {
+  const { t } = useI18n();
+
+  const plans = [
+    {
+      nameKey: "pricing.free",
+      price: "$0",
+      periodKey: "pricing.freePeriod",
+      descKey: "pricing.freeDesc",
+      featureKeys: [
+        "pricing.freeFeature1",
+        "pricing.freeFeature2",
+        "pricing.freeFeature3",
+      ],
+      ctaKey: "pricing.freeCta",
+      href: "/sign-up",
+      popular: false,
+    },
+    {
+      nameKey: "pricing.pro",
+      price: "$6.99",
+      periodKey: "pricing.proPeriod",
+      descKey: "pricing.proDesc",
+      featureKeys: [
+        "pricing.proFeature1",
+        "pricing.proFeature2",
+        "pricing.proFeature3",
+        "pricing.proFeature4",
+        "pricing.proFeature5",
+      ],
+      ctaKey: "pricing.proCta",
+      href: "/sign-up?plan=pro",
+      popular: true,
+    },
+    {
+      nameKey: "pricing.business",
+      price: "$14.99",
+      periodKey: "pricing.businessPeriod",
+      descKey: "pricing.businessDesc",
+      featureKeys: [
+        "pricing.businessFeature1",
+        "pricing.businessFeature2",
+        "pricing.businessFeature3",
+        "pricing.businessFeature4",
+        "pricing.businessFeature5",
+        "pricing.businessFeature6",
+      ],
+      ctaKey: "pricing.businessCta",
+      href: "/sign-up?plan=business",
+      popular: false,
+    },
+  ];
+
   return (
     <div className="min-h-screen py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <Leaf className="w-7 h-7 text-leaf-400" />
-            <span className="text-xl font-bold">ChiliHub</span>
-          </Link>
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <Leaf className="w-7 h-7 text-leaf-400" />
+              <span className="text-xl font-bold">ChiliHub</span>
+            </Link>
+            <LanguageSwitcher />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Simple, Transparent Pricing
+            {t("pricing.title")}
           </h1>
           <p className="text-xl text-gray-400 max-w-xl mx-auto">
-            Start free. Upgrade when you need more power.
+            {t("pricing.subtitle")}
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan) => (
             <div
-              key={plan.name}
+              key={plan.nameKey}
               className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 flex flex-col relative ${
                 plan.popular
                   ? "border-leaf-500/30 bg-leaf-500/5 ring-1 ring-leaf-500/20"
@@ -80,24 +89,24 @@ export default function PricingPage() {
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-leaf-500 text-white text-xs font-bold px-4 py-1 rounded-full">
-                  Most Popular
+                  {t("pricing.mostPopular")}
                 </span>
               )}
 
               <div className="mb-6">
-                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <h3 className="text-xl font-bold">{t(plan.nameKey)}</h3>
                 <div className="flex items-baseline gap-1 mt-2">
                   <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className="text-gray-500">/{plan.period}</span>
+                  <span className="text-gray-500">/{t(plan.periodKey)}</span>
                 </div>
-                <p className="text-gray-400 mt-2 text-sm">{plan.description}</p>
+                <p className="text-gray-400 mt-2 text-sm">{t(plan.descKey)}</p>
               </div>
 
               <ul className="space-y-3 flex-1 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm">
+                {plan.featureKeys.map((featureKey) => (
+                  <li key={featureKey} className="flex items-start gap-3 text-sm">
                     <Check className="w-4 h-4 text-leaf-400 mt-0.5 shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
+                    <span className="text-gray-300">{t(featureKey)}</span>
                   </li>
                 ))}
               </ul>
@@ -109,7 +118,7 @@ export default function PricingPage() {
                   : "bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl text-gray-200 font-semibold px-6 py-3 hover:bg-white/10 transition-all duration-200 text-center"
                 }
               >
-                {plan.cta}
+                {t(plan.ctaKey)}
               </Link>
             </div>
           ))}

@@ -1,54 +1,54 @@
-import { Camera, BarChart3, CalendarDays, Calculator } from "lucide-react";
+"use client";
 
-const features = [
+import { Camera, BarChart3, CalendarDays, Calculator } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
+
+const featureKeys = [
   {
     icon: Camera,
-    title: "AI Disease Detector",
-    description:
-      "Upload a photo of your chili plant and get instant disease identification with treatment recommendations. Powered by advanced AI vision.",
-    badge: "Core Feature",
+    titleKey: "features.diseaseDetector",
+    descKey: "features.diseaseDetectorDesc",
+    badgeKey: "features.badgeCore",
   },
   {
     icon: BarChart3,
-    title: "Price Dashboard",
-    description:
-      "Track chili prices across regions in real-time. Get alerts when prices spike or drop. Never sell at the wrong time again.",
-    badge: "Coming Soon",
+    titleKey: "features.priceDashboard",
+    descKey: "features.priceDashboardDesc",
+    badgeKey: "features.badgeSoon",
   },
   {
     icon: CalendarDays,
-    title: "Growing Calendar",
-    description:
-      "Personalized planting schedules by variety and location. Step-by-step guides from seedling to harvest with disease prevention tips.",
-    badge: "Coming Soon",
+    titleKey: "features.growingCalendar",
+    descKey: "features.growingCalendarDesc",
+    badgeKey: "features.badgeSoon",
   },
   {
     icon: Calculator,
-    title: "Profit Calculator",
-    description:
-      "Calculate your expected profit before planting. Input costs, estimate yields, and see if this season is worth it.",
-    badge: "Coming Soon",
+    titleKey: "features.profitCalculator",
+    descKey: "features.profitCalculatorDesc",
+    badgeKey: "features.badgeSoon",
   },
 ];
 
 export function Features() {
+  const { t } = useI18n();
+
   return (
     <section id="features" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Everything a Chili Farmer Needs
+            {t("features.heading")}
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Purpose-built tools for the $10.88 billion chili pepper industry.
-            No generic farm software — this is made for you.
+            {t("features.subtitle")}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {features.map((feature) => (
+          {featureKeys.map((feature) => (
             <div
-              key={feature.title}
+              key={feature.titleKey}
               className="glass-card p-8 hover:bg-white/10 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between mb-4">
@@ -56,12 +56,12 @@ export function Features() {
                   <feature.icon className="w-6 h-6 text-leaf-400" />
                 </div>
                 <span className="text-xs font-medium text-leaf-400 glass-card px-3 py-1">
-                  {feature.badge}
+                  {t(feature.badgeKey)}
                 </span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <h3 className="text-xl font-semibold mb-2">{t(feature.titleKey)}</h3>
               <p className="text-gray-400 leading-relaxed">
-                {feature.description}
+                {t(feature.descKey)}
               </p>
             </div>
           ))}

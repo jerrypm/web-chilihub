@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { TrendingUp, TrendingDown, MapPin } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Price {
   id: string;
@@ -13,6 +14,7 @@ interface Price {
 }
 
 export default function PricesPage() {
+  const { t } = useI18n();
   const [prices, setPrices] = useState<Price[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +38,7 @@ export default function PricesPage() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Price Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-8">{t("prices.loading")}</h1>
         <div className="grid gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="glass-card p-6 animate-pulse">
@@ -59,9 +61,9 @@ export default function PricesPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Chili Price Dashboard</h1>
+        <h1 className="text-3xl font-bold">{t("prices.title")}</h1>
         <p className="text-gray-400 mt-2">
-          Real-time chili prices across regions
+          {t("prices.subtitle")}
         </p>
       </div>
 

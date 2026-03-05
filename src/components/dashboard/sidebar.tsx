@@ -13,19 +13,22 @@ import {
   Calculator,
   LogOut,
 } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const navItems = [
-  { href: "/scan", icon: Camera, label: "Disease Scanner", shortLabel: "Scan" },
-  { href: "/scan/history", icon: History, label: "Scan History", shortLabel: "History" },
-  { href: "/prices", icon: BarChart3, label: "Price Dashboard", shortLabel: "Prices" },
-  { href: "/calendar", icon: CalendarDays, label: "Growing Calendar", shortLabel: "Calendar" },
-  { href: "/calculator", icon: Calculator, label: "Profit Calculator", shortLabel: "Calc" },
+  { href: "/scan", icon: Camera, labelKey: "nav.diseaseScanner", shortLabelKey: "nav.scan" },
+  { href: "/scan/history", icon: History, labelKey: "nav.scanHistory", shortLabelKey: "nav.history" },
+  { href: "/prices", icon: BarChart3, labelKey: "nav.priceDashboard", shortLabelKey: "nav.prices" },
+  { href: "/calendar", icon: CalendarDays, labelKey: "nav.growingCalendar", shortLabelKey: "nav.calendar" },
+  { href: "/calculator", icon: Calculator, labelKey: "nav.profitCalculator", shortLabelKey: "nav.calc" },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
+  const { t } = useI18n();
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -55,19 +58,22 @@ export function Sidebar() {
                 }`}
               >
                 <item.icon className="w-5 h-5" />
-                <span className="text-sm font-medium">{item.label}</span>
+                <span className="text-sm font-medium">{t(item.labelKey)}</span>
               </Link>
             );
           })}
         </nav>
 
-        <button
-          onClick={handleSignOut}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-white/5 hover:text-gray-300 transition-colors"
-        >
-          <LogOut className="w-5 h-5" />
-          <span className="text-sm font-medium">Sign Out</span>
-        </button>
+        <div className="space-y-2">
+          <LanguageSwitcher />
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-white/5 hover:text-gray-300 transition-colors w-full"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="text-sm font-medium">{t("nav.signOut")}</span>
+          </button>
+        </div>
       </aside>
 
       {/* Mobile bottom nav */}
@@ -84,17 +90,11 @@ export function Sidebar() {
                 }`}
               >
                 <item.icon className="w-5 h-5" />
-                <span className="text-[10px] font-medium truncate">{item.shortLabel}</span>
+                <span className="text-[10px] font-medium truncate">{t(item.shortLabelKey)}</span>
               </Link>
             );
           })}
-          <button
-            onClick={handleSignOut}
-            className="flex flex-col items-center gap-1 py-3 px-2 text-gray-500"
-          >
-            <LogOut className="w-5 h-5" />
-            <span className="text-[10px] font-medium">Logout</span>
-          </button>
+          <LanguageSwitcher compact />
         </div>
       </nav>
     </>

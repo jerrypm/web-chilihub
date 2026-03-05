@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Calculator, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Inputs {
   landArea: number;        // hectares
@@ -28,6 +29,7 @@ const defaultInputs: Inputs = {
 };
 
 export default function CalculatorPage() {
+  const { t } = useI18n();
   const [inputs, setInputs] = useState<Inputs>(defaultInputs);
   const [calculated, setCalculated] = useState(false);
 
@@ -52,23 +54,23 @@ export default function CalculatorPage() {
     setCalculated(true);
   }
 
-  const inputFields = [
-    { key: "landArea" as const, label: "Land Area (hectares)", step: "0.1" },
-    { key: "seedCost" as const, label: "Seed Cost (per hectare)", step: "1000" },
-    { key: "fertilizerCost" as const, label: "Fertilizer Cost (per hectare)", step: "1000" },
-    { key: "pesticideCost" as const, label: "Pesticide Cost (per hectare)", step: "1000" },
-    { key: "laborCost" as const, label: "Labor Cost (per hectare)", step: "1000" },
-    { key: "otherCost" as const, label: "Other Costs (per hectare)", step: "1000" },
-    { key: "expectedYield" as const, label: "Expected Yield (kg/hectare)", step: "100" },
-    { key: "sellingPrice" as const, label: "Selling Price (per kg)", step: "1000" },
+  const inputFields: { key: keyof Inputs; labelKey: string; step: string }[] = [
+    { key: "landArea", labelKey: "calculator.landArea", step: "0.1" },
+    { key: "seedCost", labelKey: "calculator.seedCost", step: "1000" },
+    { key: "fertilizerCost", labelKey: "calculator.fertilizerCost", step: "1000" },
+    { key: "pesticideCost", labelKey: "calculator.pesticideCost", step: "1000" },
+    { key: "laborCost", labelKey: "calculator.laborCost", step: "1000" },
+    { key: "otherCost", labelKey: "calculator.otherCost", step: "1000" },
+    { key: "expectedYield", labelKey: "calculator.expectedYield", step: "100" },
+    { key: "sellingPrice", labelKey: "calculator.sellingPrice", step: "1000" },
   ];
 
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Profitability Calculator</h1>
+        <h1 className="text-3xl font-bold">{t("calculator.title")}</h1>
         <p className="text-gray-400 mt-2">
-          Calculate if chili farming is profitable this season
+          {t("calculator.subtitle")}
         </p>
       </div>
 
@@ -77,16 +79,16 @@ export default function CalculatorPage() {
         <div className="glass-card p-6 space-y-4">
           <h2 className="font-semibold text-lg flex items-center gap-2">
             <Calculator className="w-5 h-5 text-leaf-400" />
-            Input Your Numbers
+            {t("calculator.inputTitle")}
           </h2>
           <p className="text-sm text-gray-500">
-            Default values in IDR (Indonesian Rupiah). Adjust to your local costs.
+            {t("calculator.inputNote")}
           </p>
 
           {inputFields.map((field) => (
             <div key={field.key}>
               <label className="block text-sm text-gray-400 mb-1">
-                {field.label}
+                {t(field.labelKey)}
               </label>
               <input
                 type="number"
@@ -113,7 +115,7 @@ export default function CalculatorPage() {
               <TrendingDown className="w-12 h-12 text-chili-400 mx-auto mb-2" />
             )}
             <h3 className="text-2xl font-bold mb-1">
-              {isProfitable ? "PROFITABLE" : "NOT PROFITABLE"}
+              {isProfitable ? t("calculator.profitable") : t("calculator.notProfitable")}
             </h3>
             <p className="text-gray-400 text-sm">
               ROI: {roi.toFixed(1)}%
@@ -124,25 +126,25 @@ export default function CalculatorPage() {
           <div className="glass-card p-6 space-y-4">
             <h3 className="font-semibold flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-leaf-400" />
-              Financial Breakdown
+              {t("calculator.breakdown")}
             </h3>
 
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Total Cost</span>
+                <span className="text-gray-400">{t("calculator.totalCost")}</span>
                 <span className="text-chili-400 font-semibold">
                   Rp {fmt(totalCost)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Expected Revenue</span>
+                <span className="text-gray-400">{t("calculator.expectedRevenue")}</span>
                 <span className="text-leaf-400 font-semibold">
                   Rp {fmt(totalRevenue)}
                 </span>
               </div>
               <div className="border-t border-white/10 pt-3 flex justify-between">
                 <span className="font-semibold">
-                  {isProfitable ? "Net Profit" : "Net Loss"}
+                  {isProfitable ? t("calculator.netProfit") : t("calculator.netLoss")}
                 </span>
                 <span
                   className={`text-xl font-bold ${
@@ -157,7 +159,7 @@ export default function CalculatorPage() {
 
           {/* Cost per kg */}
           <div className="glass-card p-6">
-            <p className="text-sm text-gray-400 mb-1">Your cost per kg</p>
+            <p className="text-sm text-gray-400 mb-1">{t("calculator.costPerKg")}</p>
             <p className="text-2xl font-bold">
               Rp{" "}
               {fmt(
@@ -168,7 +170,7 @@ export default function CalculatorPage() {
               <span className="text-sm text-gray-500 font-normal">/kg</span>
             </p>
             <p className="text-sm text-gray-500 mt-1">
-              Selling at Rp {fmt(inputs.sellingPrice)}/kg
+              {t("calculator.sellingAt")} Rp {fmt(inputs.sellingPrice)}/kg
             </p>
           </div>
         </div>

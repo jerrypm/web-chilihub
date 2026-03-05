@@ -5,8 +5,10 @@ import { ImageUploader } from "@/components/scan/image-uploader";
 import { ScanResult } from "@/components/scan/scan-result";
 import { loadModel, classifyImage, type ScanResult as ScanResultType } from "@/lib/disease-model";
 import { Loader2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function ScanPage() {
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [modelLoading, setModelLoading] = useState(true);
   const [result, setResult] = useState<ScanResultType | null>(null);
@@ -36,7 +38,7 @@ export default function ScanPage() {
         return;
       }
       if (limitData.remaining !== Infinity && limitData.remaining <= 0) {
-        setError("Scan limit reached. Upgrade to Pro for unlimited scans.");
+        setError(t("scan.limitReached"));
         return;
       }
 
@@ -73,7 +75,7 @@ export default function ScanPage() {
       setScansRemaining(saveData.remaining ?? limitData.remaining);
       URL.revokeObjectURL(imageUrl);
     } catch {
-      setError("Analysis failed. Please try again with a clearer photo.");
+      setError(t("scan.analysisFailed"));
     } finally {
       setLoading(false);
     }
@@ -82,16 +84,16 @@ export default function ScanPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold">AI Disease Scanner</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">{t("scan.title")}</h1>
         <p className="text-gray-400 mt-2">
-          Upload a photo of your chili plant to detect diseases instantly
+          {t("scan.subtitle")}
         </p>
       </div>
 
       {modelLoading && (
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-6 flex items-center gap-3">
           <Loader2 className="w-5 h-5 text-leaf-400 animate-spin" />
-          <span className="text-gray-300">Loading AI model...</span>
+          <span className="text-gray-300">{t("scan.loadingModel")}</span>
         </div>
       )}
 

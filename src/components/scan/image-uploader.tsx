@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import { Upload, X, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useI18n } from "@/lib/i18n/context";
 
 interface ImageUploaderProps {
   onUpload: (file: File) => void;
@@ -10,6 +11,7 @@ interface ImageUploaderProps {
 }
 
 export function ImageUploader({ onUpload, loading = false }: ImageUploaderProps) {
+  const { t } = useI18n();
   const [preview, setPreview] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -76,7 +78,7 @@ export function ImageUploader({ onUpload, loading = false }: ImageUploaderProps)
           {loading ? (
             <div className="flex items-center justify-center gap-2 mt-4">
               <Loader2 className="w-5 h-5 text-leaf-400 animate-spin" />
-              <span className="text-gray-300">Analyzing image...</span>
+              <span className="text-gray-300">{t("scan.analyzing")}</span>
             </div>
           ) : (
             <button
@@ -98,10 +100,10 @@ export function ImageUploader({ onUpload, loading = false }: ImageUploaderProps)
           </div>
           <div className="text-center">
             <p className="text-gray-200 font-medium">
-              Drop your chili plant photo here
+              {t("scan.dropPhoto")}
             </p>
             <p className="text-gray-500 text-sm mt-1">
-              or click to browse (JPG, PNG, WebP)
+              {t("scan.orBrowse")}
             </p>
           </div>
         </button>

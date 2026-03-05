@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Leaf, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useI18n } from "@/lib/i18n/context";
 
 function GoogleIcon() {
   return (
@@ -19,6 +20,7 @@ function GoogleIcon() {
 
 export default function SignInPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -62,9 +64,9 @@ export default function SignInPage() {
             </div>
             <span className="text-2xl font-bold gradient-text">ChiliHub</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white mt-6">Welcome back</h1>
+          <h1 className="text-2xl font-bold text-white mt-6">{t("auth.signInTitle")}</h1>
           <p className="text-gray-400 mt-2">
-            Sign in to your ChiliHub account
+            {t("auth.signInSubtitle")}
           </p>
         </div>
 
@@ -85,7 +87,7 @@ export default function SignInPage() {
             className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-colors mb-6"
           >
             <GoogleIcon />
-            Continue with Google
+            {t("auth.continueWithGoogle")}
           </button>
 
           <div className="relative mb-6">
@@ -93,7 +95,7 @@ export default function SignInPage() {
               <div className="w-full border-t border-white/10" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-gray-950 text-gray-500">or</span>
+              <span className="px-4 bg-gray-950 text-gray-500">{t("auth.or")}</span>
             </div>
           </div>
 
@@ -109,14 +111,14 @@ export default function SignInPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                Email
+                {t("auth.email")}
               </label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t("auth.emailPlaceholder")}
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-leaf-500/50"
               />
@@ -127,14 +129,14 @@ export default function SignInPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                Password
+                {t("auth.password")}
               </label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t("auth.passwordPlaceholder")}
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-leaf-500/50"
               />
@@ -148,21 +150,21 @@ export default function SignInPage() {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Signing in...
+                  {t("auth.signingIn")}
                 </>
               ) : (
-                "Sign In"
+                t("auth.signIn")
               )}
             </button>
           </form>
 
           <p className="text-center text-gray-400 text-sm mt-6">
-            Don&apos;t have an account?{" "}
+            {t("auth.noAccount")}{" "}
             <Link
               href="/sign-up"
               className="text-leaf-400 hover:text-leaf-300 font-medium transition-colors"
             >
-              Sign up
+              {t("auth.signUp")}
             </Link>
           </p>
         </div>
